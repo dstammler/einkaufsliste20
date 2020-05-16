@@ -3,6 +3,17 @@ Einkaufsliste "KWM gegen Corona" von Dominik Stammler im Zuge der Lehrveranstalt
 
 URL: http://shoppinglist.s1710456031.student.kwmhgb.at/
 
+## Zugangsdaten
+__Super Mario als Hilfesuchender__
+
+Mail: super@mario.com 
+Passwort: plsHelp
+
+__Bernd Gruber als Helfender__
+
+Mail: berng@gruber.com
+Passwort: asdf123
+
 
 ## Seiten 
 
