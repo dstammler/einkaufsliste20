@@ -1,0 +1,68 @@
+<div *ngIf="!isLoggedIn()">
+    <header>
+        <h1>Home</h1>
+    </header>
+    <div class="container">
+        <form class="form form--login" [formGroup]="loginForm" (ngSubmit)="login()">
+            <h2>Willkommen zurück</h2>
+            <div class="profile-img">
+                <img src="../assets/profile.png" alt="">
+            </div>
+            <div class="field">
+                <label>E-Mail</label>
+                <div class="input">
+                    <i class="far fa-envelope"></i>
+                    <input class="input--with-icon" placeholder="E-Mail-Adresse eingeben" type="email" id="username" formControlName="username">
+                </div>
+                <div *ngIf="loginForm.get('username').invalid &&
+                    (loginForm.get('username').dirty || loginForm.get('username').touched) &&
+                    loginForm.get('username').hasError('required')" class="ui negative message">
+                    Benutzername ist verpflichtend
+                </div>
+                <div *ngIf="loginForm.get('username').invalid &&
+                    (loginForm.get('username').dirty || loginForm.get('username').touched) &&
+                    loginForm.get('username').hasError('email')" class="ui negative message">
+                    E-Mail Format überprüfen
+                </div>
+            </div>
+            <div class="field">
+                <label>Passwort</label>
+                <div class="input">
+                    <i class="fas fa-key"></i>
+                    <input class="input--with-icon"placeholder="Passwort eingeben" type="password" formControlName="password">
+                </div>
+                <div *ngIf="loginForm.get('password').invalid &&
+                    (loginForm.get('password').dirty || loginForm.get('password').touched)" class="ui negative message">
+                    Passwort ist verpflichtend
+                </div>
+            </div>
+
+            <button type="submit" class="button button--full-width" [disabled]="loginForm.invalid">Login</button>
+        </form>
+    </div>
+</div>
+<div *ngIf="isLoggedIn()">
+    <header>
+        <h1>Startseite von {{getName()}}</h1>
+        <button type="button" class="ui button" (click)="logout()">Logout</button>
+
+    </header>
+    <div class="container">
+
+        <div class="shopping-lists shopping-lists--open">
+            <h2>Meine offenen Einkaufslisten</h2>
+            <div *ngFor="let shoppingList of openLists" class="sl-shopping-list shopping-list" [shoppingList]="shoppingList">
+            </div>
+            <p *ngIf="openLists && openLists.length == 0">Du bearbeitest gerade keine Listen...</p>
+        </div>
+
+        <button class="button button--transparent" (click)="showDoneLists($event)"><i class="fas fa-archive"></i>erledigte Listen anzeigen</button>
+
+        <div style="display: none;" class="shopping-lists shopping-lists--done">
+            <h2>Meine erledigten Einkaufslisten </h2>
+            <div *ngFor="let shoppingList of doneLists" class="sl-shopping-list shopping-list" [shoppingList]="shoppingList">
+            </div>
+        </div>
+    </div>
+
+</div>

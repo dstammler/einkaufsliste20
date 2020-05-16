@@ -1,0 +1,24 @@
+<div class="shopping-list__header">
+    <img src="../assets/card_bg.jpg" alt="">
+</div>
+<div class="shopping-list__body">
+    <div class="shopping-list__info">
+        <div class="shopping-list__title">
+            <span>Einkaufsliste von</span>
+            <div class="shopping-list__owner">{{shoppingList.seeker?.firstname}} {{shoppingList.seeker?.lastname}}</div>
+        </div>
+        <div class="shopping-list__meta">
+            <span class="shopping-list__location with-icon--left icon-pin"><i class="fas fa-map-marker-alt"></i>{{shoppingList.seeker?.city}}</span>
+            <span class="shopping-list__enddate with-icon--left icon-cal"><i class="fas fa-calendar-check"></i>{{shoppingList.end_date |  date:'dd. MMMM yyyy'}}</span>
+            <span class="shopping-list__article with-icon--left icon-cal"><i class="fas fa-list"></i>{{shoppingList.items.length}} Artikel</span>
+            <span *ngIf="shoppingList.helper_id !== null" class="shopping-list__helper with-icon--left icon-cal"><i class="far fa-address-card"></i>{{shoppingList.helper.firstname}} {{shoppingList.helper.lastname}}</span>
+            <span *ngIf="shoppingList.helper_id === null" class="shopping-list__helper with-icon--left icon-cal"><i class="far fa-address-card"></i>kein Helfer eingetragen</span>
+
+        </div>
+    </div>
+    <a [routerLink]="['/lists/',shoppingList.id]" class="shopping-list__button">Einkaufsliste ansehen</a>
+</div>
+<div class="shopping-list__articles">
+    <span class="shopping-list__articles__amount">{{shoppingList.items.length}}</span>
+</div>
+

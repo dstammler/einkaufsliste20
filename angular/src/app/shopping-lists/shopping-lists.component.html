@@ -1,0 +1,11 @@
+<header>
+    <h1>Alle Einkaufslisten</h1>
+    <button *ngIf="this.authService.isLoggedIn()" type="button" class="ui button" (click)="this.authService.logout()">Logout</button>
+</header>
+<div class="container">
+    <div class="shopping-lists">
+        <div *ngFor="let shoppingList of shoppingLists" class="sl-shopping-list shopping-list" [shoppingList]="shoppingList">
+        </div>
+    </div>
+</div>
+

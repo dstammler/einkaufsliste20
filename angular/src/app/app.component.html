@@ -1,0 +1,20 @@
+<div class="content">
+    <aside>
+        <div class="logo">
+            <a routerLink="home"><img src="../assets/logo.png" alt=""></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a routerLink="home" routerLinkActive="active"><i class="fas fa-home"></i><span>Home</span></a></li>
+                <li><a routerLink="lists" routerLinkActive="active"><i class="fas fa-clipboard-list"></i><span>Offene Einkaufslisten</span></a></li>
+                <li *ngIf="isLoggedIn() && isSeeker()"><a routerLink="admin" routerLinkActive="active"><i class="fas fa-tools"></i><span>Administration</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+</div>
+
+
+

@@ -1,0 +1,73 @@
+<header>
+    <h1>Einkaufsliste von {{shoppingList.seeker?.firstname}} {{shoppingList.seeker?.lastname}}</h1>
+    <img src="../assets/card_bg_white.png" alt="">
+</header>
+<div class="container container--with-sidebar">
+    <div class="button button--transparent">
+        <a routerLink="/lists">&#x2039;&nbsp;&nbsp;zurück zu den Einkaufslisten</a>
+    </div>
+    <div class="shopping-list__detail">
+        <div class="card shopping-list__detail__meta">
+            <span class="shopping-list__detail__meta__date">Einkauf ist zu erledigen bis zum {{shoppingList.end_date |  date:'dd. MMMM yyyy'}}</span>
+            <div *ngIf="shoppingList.helper">
+                <span>Helfer: {{shoppingList.helper?.firstname}} {{shoppingList.helper?.lastname}}</span>
+                <button *ngIf="isHelper()" (click)="unregisterHelper($event)"><i class="fas fa-sign-out-alt"></i>Als Helfer austragen</button>
+            </div>
+            <div *ngIf="!shoppingList.helper">
+                <span>Es hat sich noch kein Helfer eingetragen.</span>
+                <button *ngIf="this.authService.getUserRole() == 'Helper'" (click)="registerHelper($event)"><i class="far fa-address-card"></i>Als Helfer eintragen</button>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="isHelper()">
+            <form [formGroup]="finalPriceForm" (ngSubmit)="postFinalPrice()">
+                <mat-form-field appearance="standard">
+                    <mat-label><mat-icon aria-hidden="false" aria-label="Example home icon">euro</mat-icon>Bezahlten Preis angeben</mat-label>
+                    <input type="number" step="0.5" [value]="this.shoppingList.finalPrice.toString()" matInput formControlName="price">
+                </mat-form-field>
+                <button type="submit" [disabled]="finalPriceForm.invalid">Bezahlten Preis bestätigen</button>
+            </form>
+
+        </div>
+
+
+        <h2>Artikel in der Einkaufsliste</h2>
+        <ul class="shopping-list__items">
+            <li *ngFor="let item of shoppingList.items;" class="sl-shopping-list-detail shopping-list__item accordion" [item]="item" [shoppingList]="this.shoppingList">
+            </li>
+        </ul>
+
+        <div *ngIf="isSeeker()" class="button">
+            <a [routerLink]="['../../admin', shoppingList?.id]"><i class="fas fa-pen"></i>Einkaufsliste bearbeiten</a>
+        </div>
+        <button *ngIf="isSeeker()" (click)="removeShoppingList()"><i class="far fa-trash-alt"></i>Einkaufsliste löschen</button>
+
+
+        <div *ngIf="isInvolved()" class="comments">
+            <h2>Kommentare</h2>
+            <ul>
+                <li *ngFor="let comment of shoppingList?.comments;" class="shopping-list__comment" >
+                    <div class="comment" [className]="comment.user_id == authService.getCurrentUserId() ? 'comment--own' : 'comment--foreign'">
+                        <span class="comment__author">{{this.users[comment.user_id]}}</span>
+                        <div class="comment__date">
+                            <span class="comment__date__time">{{comment.created_at |  date:'HH:mm'}}</span>
+                            <span class="comment__date__day">{{comment.created_at | date:'dd. MMMM yyyy'}}</span>
+                        </div>
+                        <p class="comment__content">{{comment.content}}</p>
+                        <button class="button--transparent button--small" *ngIf="comment.user_id == authService.getCurrentUserId()" (click)="deleteComment(comment.id,$event)"><i class="far fa-trash-alt"></i>Kommentar löschen</button>
+                    </div>
+                </li>
+            </ul>
+            <form class="form form--comment" [formGroup]="commentForm" (ngSubmit)="postComment()">
+                <input type="hidden" name="id">
+                <div class="field">
+                    <mat-form-field class="full-width-field" appearance="standard">
+                        <mat-label><mat-icon aria-hidden="false" aria-label="Example home icon">chat</mat-icon> Kommentar schreiben</mat-label>
+                        <input matInput formControlName="content">
+                    </mat-form-field>
+                </div>
+                <button type="submit" [disabled]="commentForm.invalid">Kommentar senden</button>
+            </form>
+        </div>
+    </div>
+</div>
