@@ -19,20 +19,20 @@ Passwort: asdf123
 Die Applikation teilt sich auf die drei Seiten "Home", "Offene Einkaufslisten" und "Administration" auf. 
 
 ### Home
-Auf dieser Seite kann man sich einloggen und anschließend auf die eigenen Listen zugreifen. Hier wird unterschieden, ob man sich als Hilfesuchender oder Helfender eingeloggt hat. Als Hilfesuchender sieht man Überblick über seine angelegten Listen. Zu Beginn werden die offenen Listen angezeigt, und falls erledigte Listen vorhanden sind, kann man diese mit einem Klick auf erledigte Listen anzeigen.
+Diese Seite wird als einzige angezeigt, egal ob man eingeloggt ist oder nicht. Auf dieser Seite kann man sich einloggen und anschließend auf die eigenen Listen zugreifen. Hier wird unterschieden, ob man sich als Hilfesuchender oder Helfender eingeloggt hat. Als Hilfesuchender sieht man Überblick über seine angelegten Listen. Zu Beginn werden die offenen Listen angezeigt, und falls erledigte Listen vorhanden sind, kann man diese mit einem Klick auf erledigte Listen anzeigen.
 
 Als eingeloggter Helfer sieht man zuerst die offenen, angenommenen Einkaufslisten (falls vorhanden) und wiederum die erledigten Listen (falls vorhanden), durch einen Klick auf den Button, darunter.  
 
 ### Offene Einkaufslisten
-Hier erhalten alle User (auch nicht eingeloggte) eine Übersicht über alle nicht angenommene Einkaufslisten. Eine Einkaufs
-
-### Einkaufsliste - Detailseite
+Der Helfende kann auf dieser Seite offene Einkaufslisten annehmen. Er erhält eine Übersicht über alle nicht angenommene und bevorstehende Einkäufe.  
 
 ### Administration
+Der hilfesuchende User kann über den Administrationsbereich eine Seite anlegen, oder über Detailseite --> Liste bearbeiten, die Liste anpassen. Eine Liste kann nur dann bearbeitet werden, wenn sich noch kein Hilfesuchender registriert hat. 
 
-#### Liste bearbeiten
+### Einkaufsliste - Detailseite
+Die Detailseite zeigt nähere Infos einer Einkaufsliste an. Items und Kommentare werden nur den beteiligten angezeigt, sprich dem Listenersteller und dem registrierten Helfer. Dem Helfenden wird zusätzlich die Anschrift + Button zur Navigation angezeigt.
 
-#### Neue Liste anlegen
+Falls noch kein Helfender registriert ist, können sich solche über die Detailseite für den Einkauf registrieren. Der Button wird klarerweise nur für offene Einkaufslisten angezeigt, und ändert sich für den zugehörigen Helfenden in einen Button zum Abmelden der Liste. 
 
 
 ## Datenbankschema
@@ -56,9 +56,27 @@ Bei diesem Schema wurde eine N:M Beziehung zwischen dem User und der Rolle gewä
 ### Rolle
 In dieser Tabelle werden Rollen mit den Rollennamen und der Beschreibung gespeichert. 
 
-## Rest-Api Methoden
+## REST-Api Methoden
+In der Applikation stehen REST-Api Methoden zu User, Einkaufslisten, Items und Kommentare zur Verfügung. Die Routen werden allesamt, außer Login Methode, durch die Middleware auth.jwt geladen. Unangemeldet bekommen User keine Infos über die Listen, User, etc. Sobald User eingeloggt sind, werden Routen durch Middlewares auf Berechtigung überprüft. 
 
-## Routingkonzept
+### User
+* getUserById: Userinformationen werden anhand der Id abgerufen
+
+### Einkaufsliste
+* getListById: Liste wird mittels Id abgerufen
+* getOpenLists: liefert alle offenen (nicht angenommene) Listen
+* getDoneLists: liefert alle Listen die älter als das Enddatum sind zurück
+* getOpenListsById: getOpenLists Methode mit zusätzlichem Id Filter
+* getDoneListsById: getDoneLists Methode mit zusätzlichem Id Filter
+
+### Items
+
+### Kommentare
+* postComment: Speichert einen neuen Kommentar zu einer Einkaufsliste
+* getComments: ruft alle Kommentare einer Einkaufsliste ab
+* deleteComment: löscht ein Kommentar einer Einkaufsliste
+
+### Authentication
 
 ## Styling
-Das CSS wurde selbst entwickelt und die Formularfelder mithilfe des Material Designs umgesetzt. 
+Das CSS wurde selbst erstellt und die Formularfelder mithilfe des Material Designs umgesetzt. 
