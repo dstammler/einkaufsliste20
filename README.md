@@ -16,7 +16,7 @@ Passwort: asdf123
 
 
 ## Seiten 
-Die Applikation teilt sich auf die drei Seiten "Home", "Offene Einkaufslisten" und "Administration" auf. 
+Die Applikation teilt sich auf die Seiten "Home", "Offene Einkaufslisten", "Detailseite" und "Administration" auf. 
 
 ### Home
 Diese Seite wird als einzige angezeigt, egal ob man eingeloggt ist oder nicht. Auf dieser Seite kann man sich einloggen und anschließend auf die eigenen Listen zugreifen. Hier wird unterschieden, ob man sich als Hilfesuchender oder Helfender eingeloggt hat. Als Hilfesuchender sieht man Überblick über seine angelegten Listen. Zu Beginn werden die offenen Listen angezeigt, und falls erledigte Listen vorhanden sind, kann man diese mit einem Klick auf erledigte Listen anzeigen.
