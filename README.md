@@ -43,10 +43,10 @@ Eine Einkaufsliste besitzt einen Ersteller, der automatisch als Hilfesuchender f
 Eine Einkaufsliste beinhaltet mehrere Items, die Zuweisung erfolgt aber über die Items Tablele. 
 
 ### Items
-
+Jedes Item zeigt auf eine Einkaufsliste und beinhaltet nähere Informationen zum Artikel. In dieser Tabelle wird der Artikelname, die Menge, die Einheit, der maximale Preis und der erledigt Zustand neben den initialen Attributen gespeichert. 
 
 ### User
-
+Ein User speichert verpflichtend neben seiner eMail und seinem Passwort den Vornamen, Nachnamen und die Stadt/den Ort. Optional können Straße Hausnummer und PLZ angegeben werden. Diese Infos können beispielsweise in den Kommentaren abgefragt werden. 
 
 
 ### Userrolle
@@ -54,10 +54,10 @@ Bei diesem Schema wurde eine N:M Beziehung zwischen dem User und der Rolle gewä
 
 
 ### Rolle
-In dieser Tabelle werden Rollen mit den Rollennamen und der Beschreibung gespeichert. 
+In dieser Tabelle werden Rollen mit den Rollennamen und der Beschreibung gespeichert. Der Rollenname unterscheidet schließlich den Hilfesuchenden vom Helfenden. 
 
 ## REST-Api Methoden
-In der Applikation stehen REST-Api Methoden zu User, Einkaufslisten, Items und Kommentare zur Verfügung. Die Routen werden allesamt, außer Login Methode, durch die Middleware auth.jwt geladen. Unangemeldet bekommen User keine Infos über die Listen, User, etc. Sobald User eingeloggt sind, werden Routen durch Middlewares auf Berechtigung überprüft. 
+In der Applikation stehen REST-Api Methoden zu User, Einkaufslisten, Items und Kommentare zur Verfügung. Die Routen werden allesamt, außer Login Methode, durch die Middleware auth.jwt geladen. Unangemeldet bekommen User keine Infos über die Listen, User, etc. Sobald User eingeloggt sind, werden einige Routen durch die Middlewares "auth.seeker" und "auth.helper" auf Berechtigung überprüft. 
 
 ### User
 * getUserById: Userinformationen werden anhand der Id abgerufen
@@ -69,14 +69,29 @@ In der Applikation stehen REST-Api Methoden zu User, Einkaufslisten, Items und K
 * getOpenListsById: getOpenLists Methode mit zusätzlichem Id Filter
 * getDoneListsById: getDoneLists Methode mit zusätzlichem Id Filter
 
+* save: speichert eine neue Einkaufsliste mit Artikel (nur Hilfesuchende)
+* update: aktualisiert eine Einkaufsliste (nur Hilfesuchende)
+* delete: löscht eine Einkaufsliste (nur Hilfesuchende)
+
+* registerHelper: registriert einen Helfer zu einer Einkaufsliste (nur für Helfende)
+* unregisterHelper: meldet einen Einkaufsliste einer Liste ab (nur für Helfende)
+* updateFinalPrice: speichert den bezahlten Preis einer Einkaufsliste (nur für Helfende)
+
 ### Items
+* save: speichert ein neues Item (nur Hilfesuchende)
+* deleteItem: löscht ein Item (nur Hilfesuchende)
+* Update: aktualisiert ein Item (nur Hilfesuchende)
+
+* togglecheck: toggled den "erledigt" Zustand eines Artikels
 
 ### Kommentare
 * postComment: Speichert einen neuen Kommentar zu einer Einkaufsliste
 * getComments: ruft alle Kommentare einer Einkaufsliste ab
-* deleteComment: löscht ein Kommentar einer Einkaufsliste
+* deleteComment: löscht ein Kommentar einer Einkaufsliste 
 
 ### Authentication
+* login: loggt einen Benutzer ein ...
+* logout: loggt einen Benutzer aus ...
 
 ## Styling
 Das CSS wurde selbst erstellt und die Formularfelder mithilfe des Material Designs umgesetzt. 
