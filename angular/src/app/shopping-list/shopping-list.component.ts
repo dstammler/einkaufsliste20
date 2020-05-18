@@ -12,11 +12,14 @@ export class ShoppingListComponent implements OnInit {
 
   @Input() shoppingList: ShoppingList;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,) { }
 
   ngOnInit() {
 
   }
 
+  isHome(){
+    return this.route.snapshot.url[0].path == "home";
+  }
 
 }

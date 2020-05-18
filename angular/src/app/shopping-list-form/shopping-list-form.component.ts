@@ -32,7 +32,7 @@ export class ShoppingListFormComponent implements OnInit {
         const id = this.route.snapshot.params['id'];
         if (id) {
             this.isUpdatingShoppingList = true;
-            this.sl.getSingle(id).subscribe(list => {
+            this.sl.getShoppinglistById(id).subscribe(list => {
                 this.shoppingList = list;
                 this.initList();
             })
@@ -85,9 +85,7 @@ export class ShoppingListFormComponent implements OnInit {
         this.items.push(this.fb.group({label: "", amount: "", unit: "", max_price: ""}))
     }
 
-    deleteItem() {
-        console.log(this);
-    }
+
 
     submitForm(): void {
         // filter empty values
@@ -97,15 +95,14 @@ export class ShoppingListFormComponent implements OnInit {
 
         console.log(shoppingList.end_date);
 
-        // todo function: adds or adjusts items
         if (this.isUpdatingShoppingList) {
-            this.sl.update(shoppingList).subscribe(res => {
-                this.router.navigate(['../../lists', shoppingList.id], {
+            this.sl.updateShoppinglist(shoppingList).subscribe(res => {
+                this.router.navigate(['../../home', shoppingList.id], {
                     relativeTo: this.route
                 });
             });
         } else {
-            this.sl.create(shoppingList).subscribe(res => {
+            this.sl.createShoppinglist(shoppingList).subscribe(res => {
                 this.shoppingList = ShoppinglistFactory.empty();
                 this.shoppingListForm.reset(ShoppinglistFactory.empty());
                 this.router.navigate(['../lists'], {relativeTo: this.route})

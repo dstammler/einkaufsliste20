@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit {
     getOpenListsByUserId() {
         this.sl.getOpenListsByUserId(this.authService.getCurrentUserId()).subscribe(res => {
             this.openLists = res;
-            console.log(res);
         });
     }
 

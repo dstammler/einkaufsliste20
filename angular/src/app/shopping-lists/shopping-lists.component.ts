@@ -22,6 +22,7 @@ export class ShoppingListsComponent implements OnInit {
 
     ngOnInit() {
         this.sl.getOpenLists().subscribe(res => {
+            console.log(res);
             this.shoppingLists = res;
         });
     }

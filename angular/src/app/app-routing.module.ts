@@ -9,6 +9,7 @@ import {ShoppingListFormComponent} from "./shopping-list-form/shopping-list-form
 const routes : Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
+  {path: 'home/:id', component: ShoppingListDetailComponent},
   {path: 'lists', component: ShoppingListsComponent},
   {path: 'lists/:id', component: ShoppingListDetailComponent},
   {path: 'admin', component: ShoppingListFormComponent},

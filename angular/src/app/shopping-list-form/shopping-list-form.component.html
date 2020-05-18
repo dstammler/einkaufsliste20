@@ -49,12 +49,14 @@
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Max. Preis</mat-label>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" matSuffix>euro</mat-icon>
                             <input type="number" matInput formControlName="max_price">
                             <div *ngIf="errors.max_price" class="negative message">{{errors.max_price}}</div>
                         </mat-form-field>
+
                     </div>
                     <div *ngIf="l">
-                        <button (click)="addItemControl()" color="primary" mat-mini-fab  aria-label="Icon button with plus icon">
+                        <button (click)="addItemControl()" color="basic" mat-mini-fab  aria-label="Icon button with plus icon">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>

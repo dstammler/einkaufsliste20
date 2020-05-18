@@ -16,7 +16,8 @@
 
         </div>
     </div>
-    <a [routerLink]="['/lists/',shoppingList.id]" class="shopping-list__button">Einkaufsliste ansehen</a>
+    <a *ngIf="isHome()" [routerLink]="['/home/',shoppingList.id]" class="shopping-list__button">Einkaufsliste ansehen</a>
+    <a *ngIf="!isHome()" [routerLink]="['/lists/',shoppingList.id]" class="shopping-list__button">Einkaufsliste ansehen</a>
 </div>
 <div class="shopping-list__articles">
     <span class="shopping-list__articles__amount">{{shoppingList.items.length}}</span>

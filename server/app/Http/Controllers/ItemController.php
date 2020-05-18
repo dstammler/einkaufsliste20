@@ -129,7 +129,7 @@ class ItemController extends Controller
     /**
      * returns 200 if item deleted successfully , throws excpetion if not
      */
-    public function delete(string $id): JsonResponse
+    public function deleteItem(string $id): JsonResponse
     {
         $item = Item::where('id', $id)->first();
         if ($item != null) {

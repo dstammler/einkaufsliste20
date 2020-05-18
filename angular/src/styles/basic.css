@@ -13,18 +13,29 @@ body{
 
 .container{
     padding: 30px;
+
+    max-width: 1700px;
 }
 
 .content{
     display: flex;
 }
 
-.negative{
-    color: #ff0000;
-}
+
 
 .flexed{
     display: flex;
+}
+
+.mat-basic{
+    background-color: rgb(19,17,32);
+    color: #ffffff;
+}
+
+.error-message{
+    color: #ff0000;
+    font-style: italic;
+    font-size: 11px;
 }
 
 
@@ -226,6 +237,22 @@ button i, .button i{
 .full-width-field{
     width: 100%;
 }
+
+.form--login{
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+.profile-img img{
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+}
+
 /*
 input{
     outline: 0;
@@ -252,35 +279,13 @@ input:focus{
 
 }
 
-.form--login{
-    width: 400px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
 
 .profile-img{
 
 }
 
-.profile-img img{
-    width: 150px;
-    display: block;
-    margin: 0 auto;
-}
 
-.form--login input{
-    background-color: #ffffff;
-    border: 1px solid #aaaaaa;
-    width: 100%;
-    max-width: 400px;
-}
 
-.form--login input:focus{
-    background-color: #ffffff;
-    border-color: #4a4a4a;
-}
 
 label{
     color: #777777;

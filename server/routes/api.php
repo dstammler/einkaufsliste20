@@ -14,35 +14,22 @@ use App\Item;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 
 # Lists
-Route::get('lists','ShoppinglistController@index');
 
-Route::get('lists/{listId}','ShoppinglistController@getByListID','ItemController@getByListID');
-
-
-Route::get('openlists','ShoppinglistController@getAllOpenLists');
-
-Route::get('openlists/{userId}','ShoppinglistController@getOpenListsByUserId');
-Route::get('donelists/{userId}','ShoppinglistController@getDoneListsByUserId');
 
 
 
 
 # Items
-Route::get('items','ItemController@index');
-Route::get('items/{listId}','ItemController@getByListID');
-Route::get('item/{id}','ItemController@checkID');
-Route::get('items/search/{searchTerm}','ItemController@checkID');
+//Route::get('items','ItemController@index');
+//Route::get('items/{listId}','ItemController@getByListID');
+//Route::get('item/{id}','ItemController@checkID');
+//Route::get('items/search/{searchTerm}','ItemController@checkID');
 
-Route::post('item', 'ItemController@save');
-
-Route::put('item/{id}','ItemController@update');
-
-Route::delete('item/{id}', 'ItemController@delete');
 
 /* auth init */
 Route::group(['middleware' => ['api', 'cors']], function () {
@@ -52,11 +39,20 @@ Route::group(['middleware' => ['api', 'cors']], function () {
 
 /* auth general */
 Route::group(['middleware' => ['api','cors','auth.jwt']],function (){
-    Route::get('users/{userId}','ShoppinglistController@getUserById');
-    Route::get('lists/{listId}/comments','ShoppinglistController@getComments');
+    //Route::get('lists','ShoppinglistController@index');
     Route::post('auth/logout', 'Auth\ApiAuthController@logout');
+
+    Route::get('lists/{listId}','ShoppinglistController@getByListID','ItemController@getByListID');
+    Route::get('openlists','ShoppinglistController@getAllOpenLists');
+    Route::get('openlists/{userId}','ShoppinglistController@getOpenListsByUserId');
+    Route::get('donelists/{userId}','ShoppinglistController@getDoneListsByUserId');
+
+    Route::get('lists/{listId}/comments','ShoppinglistController@getComments');
     Route::post('lists/{listId}/comment', 'ShoppinglistController@postComment');
     Route::delete('comment/{commentId}','ShoppinglistController@deleteComment');
+
+    Route::get('users/{userId}','ShoppinglistController@getUserById');
+
     Route::put('item/{itemId}/check','ItemController@checkItem');
     Route::put('item/{itemId}/togglecheck','ItemController@toggleCheckItem');
     Route::put('item/{itemId}/uncheck','ItemController@uncheckItem');
@@ -67,6 +63,9 @@ Route::group(['middleware' => ['api','cors','auth.jwt','auth.seeker']], function
     Route::post('lists','ShoppinglistController@save');
     Route::put('lists/{listId}','ShoppinglistController@update');
     Route::delete('lists/{listId}','ShoppinglistController@delete');
+    Route::delete('item/{id}', 'ItemController@deleteItem');
+    Route::post('item', 'ItemController@save');
+    Route::put('item/{id}','ItemController@update');
 });
 
 /* auth helper */

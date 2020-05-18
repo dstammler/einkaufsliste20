@@ -11,16 +11,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user4 = new \App\User;
-        $user4->email = "defaultuser@default.com";
-        $user4->password = bcrypt('default');
-        $user4->firstname = "Default";
-        $user4->lastname = "User";
-        $user4->city = "Musterstadt";
-        $user4->save();
+        $user1 = new \App\User;
+        $user1->email = "super@mario.com";
+        $user1->password = bcrypt("plsHelp");
+        $user1->firstname = "Super";
+        $user1->lastname = "Mario";
+        $user1->city ="Coupvray";
+        $user1->street="Boulevard de Parc";
+        $user1->zip ="77700";
+        $user1->save();
 
         $user = new \App\User;
-        $user->email = "bernd.gruber@hotmail.com";
+        $user->email = "bernd@gruber.com";
         $user->password = bcrypt('asdf123');
         $user->firstname = "Bernd";
         $user->lastname = "Gruber";
@@ -30,13 +32,7 @@ class UsersTableSeeder extends Seeder
         $user->zip = 4020;
         $user->save();
 
-        $user1 = new \App\User;
-        $user1->email = "super.mario@hotmail.com";
-        $user1->password = bcrypt("HelpMario");
-        $user1->firstname = "Super";
-        $user1->lastname = "Mario";
-        $user1->city ="Cityland";
-        $user1->save();
+
 
         $user2 = new \App\User;
         $user2->email = "DavidWurfel@einrot.com";

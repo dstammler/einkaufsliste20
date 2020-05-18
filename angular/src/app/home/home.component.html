@@ -9,30 +9,30 @@
                 <img src="../assets/profile.png" alt="">
             </div>
             <div class="field">
-                <label>E-Mail</label>
-                <div class="input">
-                    <i class="far fa-envelope"></i>
-                    <input class="input--with-icon" placeholder="E-Mail-Adresse eingeben" type="email" id="username" formControlName="username">
-                </div>
+                <mat-form-field class="full-width-field" appearance="standard">
+                    <mat-icon matSuffix aria-hidden="false" aria-label="Example home icon">email</mat-icon>
+                    <mat-label>E-Mail-Adresse eingeben</mat-label>
+                    <input matInput type="email" id="username" formControlName="username">
+                </mat-form-field>
                 <div *ngIf="loginForm.get('username').invalid &&
                     (loginForm.get('username').dirty || loginForm.get('username').touched) &&
-                    loginForm.get('username').hasError('required')" class="ui negative message">
+                    loginForm.get('username').hasError('required')" class="error-message">
                     Benutzername ist verpflichtend
                 </div>
                 <div *ngIf="loginForm.get('username').invalid &&
                     (loginForm.get('username').dirty || loginForm.get('username').touched) &&
-                    loginForm.get('username').hasError('email')" class="ui negative message">
+                    loginForm.get('username').hasError('email')" class="error-message">
                     E-Mail Format überprüfen
                 </div>
             </div>
             <div class="field">
-                <label>Passwort</label>
-                <div class="input">
-                    <i class="fas fa-key"></i>
-                    <input class="input--with-icon"placeholder="Passwort eingeben" type="password" formControlName="password">
-                </div>
+                <mat-form-field class="full-width-field" appearance="standard">
+                    <mat-icon matSuffix aria-hidden="false" aria-label="Example home icon">lock</mat-icon>
+                    <mat-label>Passwort eingeben</mat-label>
+                    <input matInput id="password" type="password" formControlName="password">
+                </mat-form-field>
                 <div *ngIf="loginForm.get('password').invalid &&
-                    (loginForm.get('password').dirty || loginForm.get('password').touched)" class="ui negative message">
+                    (loginForm.get('password').dirty || loginForm.get('password').touched)" class="error-message">
                     Passwort ist verpflichtend
                 </div>
             </div>
@@ -49,8 +49,8 @@
     </header>
     <div class="container">
 
-        <div class="shopping-lists shopping-lists--open">
-            <h2>Meine offenen Einkaufslisten</h2>
+        <div [ngClass]="{'shopping-lists--2child': openLists && openLists.length == 2}" class="shopping-lists shopping-lists--open">
+            <h2>Unerledigte Einkaufslisten</h2>
             <div *ngFor="let shoppingList of openLists" class="sl-shopping-list shopping-list" [shoppingList]="shoppingList">
             </div>
             <p *ngIf="openLists && openLists.length == 0">Du bearbeitest gerade keine Listen...</p>
@@ -59,8 +59,8 @@
         <button class="button button--transparent" (click)="showDoneLists($event)"><i class="fas fa-archive"></i>erledigte Listen anzeigen</button>
 
         <div style="display: none;" class="shopping-lists shopping-lists--done">
-            <h2>Meine erledigten Einkaufslisten </h2>
-            <div *ngFor="let shoppingList of doneLists" class="sl-shopping-list shopping-list" [shoppingList]="shoppingList">
+            <h2>Erledigte Einkaufslisten </h2>
+            <div [ngClass]="{'shopping-lists--2child': doneLists && doneLists.length == 2}" *ngFor="let shoppingList of doneLists" class="sl-shopping-list shopping-list" [shoppingList]="shoppingList">
             </div>
         </div>
     </div>

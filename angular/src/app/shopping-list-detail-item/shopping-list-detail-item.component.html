@@ -1,16 +1,22 @@
-<div class="shopping-list__item__body">
-    <span class="shopping-list__item__label">{{item.label}}</span>
-    <div class="shopping-list__item__meta">
-        <div class="item__amount">
-            <span>{{item.amount}} {{item.unit}}</span>
-        </div>
-        <div *ngIf="item.max_price" class="item__max_price">
-            <span>maximaler Preis: {{item.max_price}} €</span>
 
+<div class="shopping-list__item__body">
+    <input *ngIf="this.isMyList()" type="checkbox"  [checked]="item.checked" (click)="toggleCheckItem(item.id)">
+    <div class="shopping-list__item__text">
+        <span class="shopping-list__item__label">{{item.label}}</span>
+        <div class="shopping-list__item__meta">
+            <div class="item__amount">
+                <span>{{item.amount}} {{item.unit}}</span>
+            </div>
+            <div *ngIf="item.max_price" class="item__max_price">
+                <span>maximaler Preis: {{item.max_price}} €</span>
+
+            </div>
         </div>
     </div>
+
 </div>
-<input *ngIf="this.isMyList()" type="checkbox"  [checked]="item.checked" (click)="toggleCheckItem(item.id)">
+
+<button type="button" *ngIf="isOwn && !helperId" (click)="deleteItem($event,item.id)">Artikel löschen</button>
 
 
 

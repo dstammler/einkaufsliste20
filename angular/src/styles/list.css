@@ -3,6 +3,17 @@
     flex-wrap: wrap;
 }
 
+.shopping-list{
+    flex: 0 32%;
+    margin-bottom: 2%;
+}
+
+.shopping-list:nth-child(3n+3){
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+
 .shopping-list *{
     color: #131120;
 }
@@ -14,15 +25,12 @@
     background: #ffffff;
     box-shadow: 5px 8px 10px rgba(0,0,0,.1);
     transition-duration: .3s;
-    margin: 0 2% 2% 0;
+    margin-bottom: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-.shopping-list:nth-child(3n){
-    margin: 0 0 2% 0;
-}
 
 .shopping-list__header{
     width: 100%;
@@ -154,20 +162,30 @@
     margin-bottom: 5px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 
-    column-count: 2;
 }
 
 .shopping-list__item{
     background: #ffffff;
-    width: calc(50% - 10px);
-    margin: 0 10px 10px 0;
+    flex: 0 calc(50% - 2.5px);
+    margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
     padding: 15px;
     list-style: none;
     overflow: hidden;
     align-items: center;
+}
+
+.shopping-list__item__body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.shopping-list__item__body input{
+    margin-right: 20px;
 }
 .shopping-list__item__meta{
     margin-top: 7px;
@@ -281,48 +299,30 @@ item form
 
 
 @media (max-width: 1300px){
+
+    .shopping-lists{
+        justify-content: space-between;
+    }
     .shopping-list{
-        width: 49%;
+        flex: 0 49%;
+
+    }
+
+    .shopping-list__item{
+
+        flex: 0 100%;
+    }
+
+    .shopping-list:nth-child(3n+3){
         margin-right: 0;
-    }
-
-    .shopping-list:nth-child(even){
-        margin-left: 2%;
-    }
-
-    .shopping-lists--open .shopping-list:nth-child(odd),
-    .shopping-lists--done .shopping-list:nth-child(odd){
-        margin-left: 2%;
-    }
-
-    .shopping-lists--open .shopping-list:nth-child(even),
-    .shopping-lists--done .shopping-list:nth-child(even){
         margin-left: 0;
     }
 
-
-    .shopping-list:nth-child(3n){
-        margin-right: 0;
-    }
 }
 
 @media (max-width: 900px){
     .shopping-list{
-        width: 100%;
-    }
-
-    .shopping-list:nth-child(2n){
-        margin-left: 0;
-    }
-
-
-}
-
-
-@media (max-width: 700px) {
-    .shopping-list{
-        width: 100%;
-        margin: 0 0 20px;
+        flex: 0 100%;
     }
 
 }

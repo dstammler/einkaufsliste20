@@ -43,19 +43,22 @@ export class ShoppingListDetailComponent implements OnInit, AfterContentInit {
 
     ngOnInit() {
         const params = this.route.snapshot.params;
-        this.sl.getSingle(params['id']).subscribe(shoppingList => {
+        this.sl.getShoppinglistById(params['id']).subscribe(shoppingList => {
             this.shoppingList = shoppingList;
-            if (this.shoppingList.helper) {
+            if (this.shoppingList.helper_id) {
                 this.users[this.shoppingList.helper_id] = this.shoppingList.helper.firstname + " " + this.shoppingList.helper.lastname;
             }
             this.users[this.shoppingList.seeker_id] = this.shoppingList.seeker.firstname + " " + this.shoppingList.seeker.lastname;
-
-            if(this.shoppingList.finalPrice){
+            if (this.shoppingList.finalPrice) {
                 this.updateFinalPriceForm();
             }
+
+            this.getCommentAuthors();
         });
 
     }
+
+
 
     // helper user methods
 
@@ -70,11 +73,12 @@ export class ShoppingListDetailComponent implements OnInit, AfterContentInit {
         let messageContainer = event.currentTarget.parentElement;
         this.sl.unregisterHelper(this.shoppingList.id).subscribe(res => {
             this.addHelperMessageToDOM(messageContainer, 'Als Helfer ausgetragen...');
+            this.postFinalPrice(true);
         });
     }
 
     isHelper() {
-        if(this.shoppingList.helper_id)
+        if (this.shoppingList.helper_id)
             return this.authService.getCurrentUserId() == this.shoppingList.helper_id;
         return false;
     }
@@ -87,25 +91,42 @@ export class ShoppingListDetailComponent implements OnInit, AfterContentInit {
         return this.isHelper() || this.isSeeker();
     }
 
+    isOwn(){
+        return this.authService.getCurrentUserId() === this.shoppingList.seeker_id;
+    }
+
+    async getNameById(id: number){
+        let name: string = "";
+        this.sl.getUserById(id).subscribe( (user) => {
+           name = user.firstname + " " + user.lastname;
+        });
+        return name;
+    }
+
     addHelperMessageToDOM(target, message) {
         target.innerHTML = message;
     }
 
-    initFinalPriceForm(){
+    initFinalPriceForm() {
         this.finalPriceForm = this.fb.group({
             price: ['', [Validators.required]]
         })
     }
 
-    updateFinalPriceForm(){
-       this.finalPriceForm.setValue({price: this.shoppingList.finalPrice});
+    updateFinalPriceForm() {
+        this.finalPriceForm.setValue({price: this.shoppingList.finalPrice});
     }
 
-    postFinalPrice(){
-        let price = this.finalPriceForm.value.price;
-        console.log(price);
+    escapeURI(uri) {
+        return encodeURIComponent(uri).replace('%20', '+');
+    }
 
-        //this.sl.postFinalPrice(price).subscribe(() => '');
+    postFinalPrice(reset = false) {
+        if(!reset){
+            this.sl.postFinalPrice(this.shoppingList.id, this.finalPriceForm.value.price).subscribe();
+        } else{
+            this.sl.postFinalPrice(this.shoppingList.id,null).subscribe();
+        }
     }
 
     // comment methods
@@ -116,12 +137,21 @@ export class ShoppingListDetailComponent implements OnInit, AfterContentInit {
         });
     }
 
+    getCommentAuthors(){
+        this.shoppingList.comments.forEach((comment) =>{
+            if(!this.users[comment.user_id]){
+                this.sl.getUserById(comment.user_id).subscribe( (user) => {
+                    this.users[comment.user_id] = user.firstname + " " + user.lastname;
+                });
+            }
+        });
+
+    }
+
     postComment() {
         let comment: Comment = ShoppinglistFactory.commentFromObject(this.commentForm.value);
         comment.shopping_list_id = this.shoppingList.id;
         comment.user_id = this.authService.getCurrentUserId();
-        console.log(comment);
-
         this.sl.postComment(comment).subscribe(res => {
             this.comment = ShoppinglistFactory.emptyComment();
             this.commentForm.reset(ShoppinglistFactory.empty());
@@ -195,7 +225,7 @@ export class ShoppingListDetailComponent implements OnInit, AfterContentInit {
 
     removeShoppingList() {
         if (confirm('Shoppingliste wirklich löschen?')) {
-            this.sl.remove(this.shoppingList.id).subscribe(res => this.router.navigate(['../'], {
+            this.sl.deleteShoppinglist(this.shoppingList.id).subscribe(res => this.router.navigate(['../'], {
                 relativeTo: this.route
             }));
         }
