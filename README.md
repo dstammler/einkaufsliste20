@@ -93,5 +93,8 @@ In der Applikation stehen REST-Api Methoden zu User, Einkaufslisten, Items und K
 * login: loggt einen Benutzer ein ...
 * logout: loggt einen Benutzer aus ...
 
+## Angular und Laravel
+Die Verbindung zwischen Angular und der Datenbank erfolgt bekanntlich über REST Api. In der Shoppinglist-Service werden alle Methoden die http Requests beinhalten gesammelt und über die URL http://einkaufsliste20.s1710456031.student.kwmhgb.at/api/ geschickt. Laravel leiter den Request über die api.php an den ShoppinglistController oder ItemController weiter und ruft je nach Request und Pfad gewünschte Methoden auf.  
+
 ## Styling
 Das CSS wurde selbst erstellt und die Formularfelder mithilfe des Material Designs umgesetzt. 
