@@ -51,7 +51,6 @@ export class ShoppingListFormComponent implements OnInit {
 
     initList() {
         this.buildItemsArray();
-        console.log(this.shoppingList);
         this.shoppingListForm = this.fb.group({
             id: this.shoppingList.id,
             seeker_id: this.shoppingList.seeker_id,
@@ -61,7 +60,15 @@ export class ShoppingListFormComponent implements OnInit {
             end_date: [this.shoppingList.end_date, [Validators.required]],
             items: this.items,
         });
-        this.shoppingListForm.statusChanges.subscribe(() => this.updateErrorMessages());
+        this.shoppingListForm.statusChanges.subscribe(() => {
+            this.updateErrorMessages()
+        });
+
+        this.shoppingListForm.get('items').statusChanges.subscribe(() =>{
+            console.log('items')
+        })
+
+
     }
 
     buildItemsArray() {
@@ -79,6 +86,8 @@ export class ShoppingListFormComponent implements OnInit {
                 })
             )
         );
+
+        console.log(this.items)
     }
 
     addItemControl() {
@@ -92,8 +101,6 @@ export class ShoppingListFormComponent implements OnInit {
         this.shoppingListForm.value.seeker_id = this.authService.getCurrentUserId();
         this.shoppingListForm.value.items = this.shoppingListForm.value.items.filter(item => item.label);
         const shoppingList: ShoppingList = ShoppinglistFactory.fromObject(this.shoppingListForm.value);
-
-        console.log(shoppingList.end_date);
 
         if (this.isUpdatingShoppingList) {
             this.sl.updateShoppinglist(shoppingList).subscribe(res => {
@@ -113,6 +120,7 @@ export class ShoppingListFormComponent implements OnInit {
     updateErrorMessages() {
         this.errors = {};
         for (const message of ShoppingListErrorMessages) {
+
             const control = this.shoppingListForm.get(message.forControl);
             if (control &&
                 control.dirty &&

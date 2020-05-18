@@ -51,7 +51,8 @@
                             <mat-label>Max. Preis</mat-label>
                             <mat-icon aria-hidden="false" aria-label="Example home icon" matSuffix>euro</mat-icon>
                             <input type="number" matInput formControlName="max_price">
-                            <div *ngIf="errors.max_price" class="negative message">{{errors.max_price}}</div>
+                            <div *ngIf="errors.max_price" class="error-message">{{errors.max_price}}</div>
+
                         </mat-form-field>
 
                     </div>

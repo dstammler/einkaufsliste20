@@ -12,11 +12,15 @@
         <div class="card shopping-list__detail__meta">
             <div *ngIf="shoppingList.helper">
                 <span>Helfende/r: {{shoppingList.helper?.firstname}} {{shoppingList.helper?.lastname}}</span>
-                <button *ngIf="isHelper()" (click)="unregisterHelper($event)"><i class="fas fa-sign-out-alt"></i>Als Helfende/r austragen</button>
+                <button *ngIf="isHelper()" (click)="unregisterHelper($event)"><i class="fas fa-sign-out-alt"></i>Als
+                    Helfende/r austragen
+                </button>
             </div>
             <div *ngIf="!shoppingList.helper">
                 <span>Es hat sich noch kein/e Helfende/r eingetragen.</span>
-                <button *ngIf="this.authService.getUserRole() == 'Helper'" (click)="registerHelper($event)"><i class="far fa-address-card"></i>Als Helfer eintragen</button>
+                <button *ngIf="this.authService.getUserRole() == 'Helper'" (click)="registerHelper($event)"><i
+                        class="far fa-address-card"></i>Als Helfer eintragen
+                </button>
             </div>
 
 
@@ -24,13 +28,19 @@
                 <mat-form-field appearance="standard">
                     <mat-icon aria-hidden="false" aria-label="Example home icon" matSuffix>euro</mat-icon>
                     <mat-label>Bezahlten Preis angeben</mat-label>
-                    <input type="number" step="0.5"  matInput formControlName="price">
+                    <input type="number" step="0.5" matInput formControlName="price">
                 </mat-form-field>
+                <div *ngIf="finalPriceForm.get('price').invalid &&
+                    (finalPriceForm.get('price').dirty || finalPriceForm.get('price').touched) &&
+                    finalPriceForm.get('price').hasError('required')" class="error-message">Du musst einen Preis angeben, damit du ihn speichern kannst.
+                </div>
+
                 <button type="submit" [disabled]="finalPriceForm.invalid">Preis bestätigen</button>
             </form>
 
             <div *ngIf="isOwn()">
-                <div *ngIf="this.shoppingList.finalPrice">Der Einkauf kostet dir € {{this.shoppingList.finalPrice}}</div>
+                <div *ngIf="this.shoppingList.finalPrice">Der Einkauf kostet dir
+                    € {{this.shoppingList.finalPrice}}</div>
 
                 <div *ngIf="!this.shoppingList.finalPrice">
                     Es wurde noch kein Preis angegeben.
@@ -44,15 +54,17 @@
 
         <h2>Artikel</h2>
         <ul class="shopping-list__items">
-            <li *ngFor="let item of shoppingList.items;" class="sl-shopping-list-detail shopping-list__item accordion" [item]="item" [isOwn]="isOwn()" [helperId]="shoppingList.helper_id">
+            <li *ngFor="let item of shoppingList.items;" class="sl-shopping-list-detail shopping-list__item accordion"
+                [item]="item" [isOwn]="isOwn()" [helperId]="shoppingList.helper_id">
 
             </li>
 
         </ul>
 
         <div class="buttonContainer flexed" *ngIf="isOwn() && !shoppingList.helper_id">
-            <div  class="button">
-                <a [routerLink]="['../../admin', shoppingList?.id]"><i class="fas fa-pen"></i>Einkaufsliste bearbeiten</a>
+            <div class="button">
+                <a [routerLink]="['../../admin', shoppingList?.id]"><i class="fas fa-pen"></i>Einkaufsliste
+                    bearbeiten</a>
             </div>
             <button (click)="removeShoppingList()"><i class="far fa-trash-alt"></i>Einkaufsliste löschen</button>
 
@@ -62,7 +74,7 @@
         <!-- helper section -->
         <div *ngIf="isHelper()">
             <h2>Anschrift</h2>
-            <div class="card" >
+            <div class="card">
                 <div class="address">
                     <div class="address__name">
                         <b>{{this.shoppingList.seeker.firstname}} {{this.shoppingList.seeker.lastname}}</b>
@@ -74,7 +86,10 @@
                         {{this.shoppingList.seeker.zip}} {{this.shoppingList.seeker.city}}
                     </div>
                 </div>
-                <a mat-button color="basic" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination={{escapeURI(this.shoppingList.seeker.street)}}+{{escapeURI(this.shoppingList.seeker.city)}}"><mat-icon prefix="">near_me</mat-icon><span>Navigiere mich hin</span></a>
+                <a mat-button color="basic" target="_blank"
+                   href="https://www.google.com/maps/dir/?api=1&destination={{escapeURI(this.shoppingList.seeker.street)}}+{{escapeURI(this.shoppingList.seeker.city)}}">
+                    <mat-icon prefix="">near_me</mat-icon>
+                    <span>Navigiere mich hin</span></a>
             </div>
         </div>
 
@@ -84,15 +99,20 @@
         <div *ngIf="isInvolved()" class="comments">
             <h2>Kommentare</h2>
             <ul>
-                <li *ngFor="let comment of shoppingList?.comments;" class="shopping-list__comment" >
-                    <div class="comment" [className]="comment.user_id == authService.getCurrentUserId() ? 'comment--own' : 'comment--foreign'">
+                <li *ngFor="let comment of shoppingList?.comments;" class="shopping-list__comment">
+                    <div class="comment"
+                         [className]="comment.user_id == authService.getCurrentUserId() ? 'comment--own' : 'comment--foreign'">
                         <span class="comment__author">{{ this.users[comment.user_id]}} </span>
                         <div class="comment__date">
                             <span class="comment__date__time">{{comment.created_at |  date:'HH:mm'}}</span>
                             <span class="comment__date__day">{{comment.created_at | date:'dd. MMMM yyyy'}}</span>
                         </div>
                         <p class="comment__content">{{comment.content}}</p>
-                        <button class="button--transparent button--small" *ngIf="comment.user_id == authService.getCurrentUserId()" (click)="deleteComment(comment.id,$event)"><i class="far fa-trash-alt"></i>Kommentar löschen</button>
+                        <button class="button--transparent button--small"
+                                *ngIf="comment.user_id == authService.getCurrentUserId()"
+                                (click)="deleteComment(comment.id,$event)"><i class="far fa-trash-alt"></i>Kommentar
+                            löschen
+                        </button>
                     </div>
                 </li>
             </ul>
@@ -100,9 +120,17 @@
                 <input type="hidden" name="id">
                 <div class="field">
                     <mat-form-field class="full-width-field" appearance="standard">
-                        <mat-label><mat-icon aria-hidden="false" aria-label="Example home icon">chat</mat-icon> Kommentar schreiben</mat-label>
+                        <mat-label>
+                            <mat-icon aria-hidden="false" aria-label="Example home icon">chat</mat-icon>
+                            Kommentar schreiben
+                        </mat-label>
                         <input matInput formControlName="content">
                     </mat-form-field>
+                </div>
+                <div *ngIf="commentForm.get('content').invalid &&
+                    (commentForm.get('content').dirty || commentForm.get('content').touched) &&
+                    commentForm.get('content').hasError('required')" class="error-message">Bitte schreibe vorher den
+                    Inhalt des Kommentars bevor du ihn abschickts.
                 </div>
                 <button type="submit" [disabled]="commentForm.invalid">Kommentar senden</button>
             </form>
