@@ -45,6 +45,7 @@ class ShoppinglistController extends Controller
         return ShoppingList::with(['seeker','helper','items'])
             ->where('end_date','>=',$date)
             ->whereNull('helper_id')
+            ->orderBy('end_date','desc')
             ->get();
     }
 
@@ -55,7 +56,7 @@ class ShoppinglistController extends Controller
             ->where(function ($query) use ($userId){
                 $query->where('seeker_id',$userId)
                     ->orWhere('helper_id',$userId);
-            })->get();
+            })->orderBy('end_date','asc')->get();
     }
 
     public function getDoneListsByUserId($userId){
@@ -65,7 +66,7 @@ class ShoppinglistController extends Controller
             ->where(function ($query) use ($userId) {
                 $query->where('seeker_id', $userId)
                     ->orWhere('helper_id', $userId);
-            })->get();
+            })->orderBy('end_date','desc')->get();
     }
 
     public function getComments($listId){

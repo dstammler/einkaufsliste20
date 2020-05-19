@@ -19,7 +19,7 @@
                 <mat-label>Einkauf erledigen bis</mat-label>
                 <input matInput type="date" min="{{todayFormatted}}" formControlName="end_date">
             </mat-form-field>-->
-            <div *ngIf="errors.end_date" class="negative message">{{errors.end_date}}</div>
+            <div *ngIf="errors.end_date" class="error-message">{{errors.end_date}}</div>
         </div>
 
         <div class="field">
@@ -33,26 +33,25 @@
                         <mat-form-field>
                             <mat-label>Artikelbezeichnung</mat-label>
                             <input matInput class="input--full-width" formControlName="label">
-                            <div *ngIf="errors.label" class="negative message">{{errors.label}}</div>
+                            <mat-error *ngIf="errors.label">{{errors.label}}</mat-error>
                         </mat-form-field>
 
 
                         <mat-form-field>
                             <mat-label>Menge</mat-label>
                             <input matInput type="number" formControlName="amount" >
-                            <div *ngIf="errors.amount" class="negative message">{{errors.amount}}</div>
+                            <mat-error *ngIf="errors.amount">{{errors.amount}}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Einheit</mat-label>
                             <input matInput formControlName="unit">
-                            <div *ngIf="errors.unit" class="negative message">{{errors.unit}}</div>
+                            <mat-error *ngIf="errors.unit">{{errors.unit}}</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Max. Preis</mat-label>
                             <mat-icon aria-hidden="false" aria-label="Example home icon" matSuffix>euro</mat-icon>
                             <input type="number" matInput formControlName="max_price">
-                            <div *ngIf="errors.max_price" class="error-message">{{errors.max_price}}</div>
-
+                            <mat-error *ngIf="errors.max_price">{{errors.max_price}}</mat-error>
                         </mat-form-field>
 
                     </div>

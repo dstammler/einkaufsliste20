@@ -65,7 +65,7 @@ export class ShoppingListFormComponent implements OnInit {
         });
 
         this.shoppingListForm.get('items').statusChanges.subscribe(() =>{
-            console.log('items')
+            this.updateErrorMessages();
         })
 
 
@@ -86,8 +86,6 @@ export class ShoppingListFormComponent implements OnInit {
                 })
             )
         );
-
-        console.log(this.items)
     }
 
     addItemControl() {
@@ -112,7 +110,7 @@ export class ShoppingListFormComponent implements OnInit {
             this.sl.createShoppinglist(shoppingList).subscribe(res => {
                 this.shoppingList = ShoppinglistFactory.empty();
                 this.shoppingListForm.reset(ShoppinglistFactory.empty());
-                this.router.navigate(['../lists'], {relativeTo: this.route})
+                this.router.navigate(['../home'], {relativeTo: this.route})
             });
         }
     }
@@ -120,16 +118,20 @@ export class ShoppingListFormComponent implements OnInit {
     updateErrorMessages() {
         this.errors = {};
         for (const message of ShoppingListErrorMessages) {
-
             const control = this.shoppingListForm.get(message.forControl);
+
+            if(control && control.invalid && control.dirty){console.log(control.errors[message.forValidator]); break}
             if (control &&
-                control.dirty &&
                 control.invalid &&
+                control.touched &&
                 control.errors [message.forValidator] &&
                 !this.errors [message.forControl]) {
+                 console.log(control)
                     this.errors [message.forControl] = message.text;
             }
         }
+
+        console.log(this.errors)
     }
 
 }

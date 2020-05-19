@@ -116,22 +116,26 @@
                     </div>
                 </li>
             </ul>
-            <form class="form form--comment" [formGroup]="commentForm" (ngSubmit)="postComment()">
+            <form class="form form--comment" [formGroup]="commentForm"  #formDirective="ngForm" (ngSubmit)="postComment(formDirective)">
                 <input type="hidden" name="id">
                 <div class="field">
                     <mat-form-field class="full-width-field" appearance="standard">
                         <mat-label>
-                            <mat-icon aria-hidden="false" aria-label="Example home icon">chat</mat-icon>
+                            <mat-icon aria-hidden="false" aria-label="Comment icon">chat</mat-icon>
                             Kommentar schreiben
                         </mat-label>
                         <input matInput formControlName="content">
+                        <mat-error *ngIf="commentForm.get('content').invalid &&
+                    (commentForm.get('content').dirty || commentForm.get('content').touched) &&
+                    commentForm.get('content').hasError('required')">Schreibe vorher den Inhalt des Kommentars, bevor du ihn abschickst.</mat-error>
                     </mat-form-field>
                 </div>
+                <!--
                 <div *ngIf="commentForm.get('content').invalid &&
                     (commentForm.get('content').dirty || commentForm.get('content').touched) &&
                     commentForm.get('content').hasError('required')" class="error-message">Bitte schreibe vorher den
                     Inhalt des Kommentars bevor du ihn abschickts.
-                </div>
+                </div>-->
                 <button type="submit" [disabled]="commentForm.invalid">Kommentar senden</button>
             </form>
         </div>

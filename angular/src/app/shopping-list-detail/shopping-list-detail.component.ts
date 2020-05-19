@@ -148,13 +148,14 @@ export class ShoppingListDetailComponent implements OnInit, AfterContentInit {
 
     }
 
-    postComment() {
+    postComment(formDirective) {
         let comment: Comment = ShoppinglistFactory.commentFromObject(this.commentForm.value);
         comment.shopping_list_id = this.shoppingList.id;
         comment.user_id = this.authService.getCurrentUserId();
         this.sl.postComment(comment).subscribe(res => {
             this.comment = ShoppinglistFactory.emptyComment();
-            this.commentForm.reset(ShoppinglistFactory.empty());
+            this.commentForm.reset(ShoppinglistFactory.emptyComment());
+            formDirective.resetForm();
             this.addCommentToDOM(res);
         });
     }
